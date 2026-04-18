@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sialingo - Al Shami</title>
+    <style>
+        :root { --green: #58cc02; --dark: #131f24; --border: #3b4c56; --blue: #1cb0f6; }
+        body { background: var(--dark); color: white; font-family: sans-serif; margin: 0; padding: 20px; text-align: center; }
+        .bar { height: 14px; background: var(--border); border-radius: 10px; margin-bottom: 20px; }
+        .fill { width: 30%; height: 100%; background: var(--green); border-radius: 10px; transition: 0.5s; }
+        .card { background: #1f2937; border: 2px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 20px; }
+        .lyrics { font-size: 26px; font-weight: bold; margin: 15px 0; min-height: 80px; }
+        .gap { color: var(--green); border-bottom: 3px solid var(--green); min-width: 100px; display: inline-block; }
+        .bricks { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .brick { background: transparent; border: 2px solid var(--border); border-bottom: 5px solid var(--border); border-radius: 15px; color: white; padding: 15px; font-weight: bold; font-size: 18px; }
+        .brick:active { transform: translateY(3px); border-bottom-width: 2px; }
+        .check { width: 100%; background: var(--green); border: none; border-bottom: 5px solid #46a302; border-radius: 15px; color: white; padding: 18px; font-size: 20px; font-weight: bold; display: none; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="bar"><div class="fill" id="pb"></div></div>
+    <div class="card">
+        <div style="color:var(--blue); font-weight:bold; margin-bottom:10px;">PLAYLIST AL SHAMI</div>
+        <button onclick="document.getElementById('a').play()" style="background:var(--blue); border:none; border-radius:50%; width:65px; height:65px; color:white; font-size:24px; box-shadow: 0 4px #0d8cc9;">▶</button>
+        <audio id="a" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+        <div class="lyrics" id="q">Ya leil ya ein... <br><span class="gap" id="ans">___</span></div>
+    </div>
+    <div class="bricks" id="btns">
+        <button class="brick" onclick="check('Albi')">Albi</button>
+        <button class="brick" onclick="check('Dawa eidek')">Dawa eidek</button>
+        <button class="brick" onclick="check('Sabra')">Sabra</button>
+        <button class="brick" onclick="check('Leila')">Leila</button>
+    </div>
+    <button id="next" class="check" onclick="location.reload()">CONTINUER</button>
+
+    <script>
+        function check(w) {
+            document.getElementById('ans').innerText = w;
+            if(w === 'Dawa eidek') {
+                document.getElementById('ans').style.color = '#58cc02';
+                document.getElementById('next').style.display = 'block';
+                document.getElementById('pb').style.width = '100%';
+            }
+        }
+    </script>
+</body>
+</html>
