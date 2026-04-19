@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sialingo - Al Shami</title>
+    <style>
+        :root { --green: #58cc02; --dark: #131f24; --border: #3b4c56; --blue: #1cb0f6; --white: #ffffff; }
+        body { background: var(--dark); color: var(--white); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; height: 100vh; justify-content: space-between; overflow: hidden; }
+        
+        /* Barre de progression style Duolingo */
+        .header { display: flex; align-items: center; gap: 15px; padding: 10px 0; }
+        .close-btn { font-size: 24px; color: var(--border); font-weight: bold; }
+        .progress-bar { flex-grow: 1; height: 16px; background: var(--border); border-radius: 20px; position: relative; }
+        .progress-fill { width: 30%; height: 100%; background: var(--green); border-radius: 20px; transition: width 0.5s ease; position: relative; }
+        .progress-fill::after { content: ''; position: absolute; top: 3px; left: 10%; width: 80%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+        /* Contenu de l'exercice */
+        .content { text-align: left; margin-top: 20px; }
+        .instruction { font-size: 22px; font-weight: bold; margin-bottom: 30px; }
+        
+        .audio-section { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+        .play-btn { background: var(--blue); border: none; border-bottom: 4px solid #1899d6; border-radius: 15px; width: 60px; height: 60px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .play-btn:active { border-bottom: 0; transform: translateY(4px); }
+        
+        .lyrics-box { font-size: 24px; line-height: 1.6; margin-bottom: 40px; }
+        .blank { display: inline-block; min-width: 100px; border-bottom: 2px solid var(--border); text-align: center; color: var(--blue); font-weight: bold; }
+
+        /* Boutons de réponse */
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .option-card { background: transparent; border: 2px solid var(--border); border-bottom: 5px solid var(--border); border-radius: 15px; color: white; padding: 15px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.1s; }
+        .option-card:active { border-bottom: 2px solid var(--border); transform: translateY(3px); }
+        .selected { background: #202f36; border-color: var(--blue); color: var(--blue); }
+
+        /* Pied de page et bouton Vérifier */
+        .footer { border-top: 2px solid var(--border); padding: 20px 0; margin: 0 -20px; padding: 20px; }
+        .check-btn { width: 100%; background: var(--green); border: none; border-bottom: 5px solid #46a302; border-radius: 15px; color: white; padding: 18px; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .check-btn:disabled { background: var(--border); border-bottom-color: #2b3a42; color: #6e7c85; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <span class="close-btn">✕</span>
+        <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+    </div>
+
+    <div class="content">
+        <div class="instruction">Complétez les paroles :</div>
+        
+        <div class="audio-section">
+            <button class="play-btn" onclick="playMusic()">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span style="font-weight: bold; color: var(--blue);">SABRA - AL SHAMI</span>
+        </div>
+
+        <div class="lyrics-box">
+            "Ya leil ya ein... <br>
+            Albi <span class="blank" id="answer-slot">_______</span>"
+        </div>
+
+        <div class="options">
+            <button class="option-card" onclick="selectOption(this, 'dawa')">Dawa eidek</button>
+            <button class="option-card" onclick="selectOption(this, 'habibi')">Habibi</button>
+            <button class="option-card" onclick="selectOption(this, 'layla')">Ya Layla</button>
+            <button class="option-card" onclick="selectOption(this, 'sabra')">Sabra</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button class="check-btn" id="check-btn" disabled onclick="validate()">Vérifier</button>
+    </div>
+
+    <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <script>
+        let currentChoice = "";
+
+        function playMusic() {
+            document.getElementById('audio').play();
+        }
+
+        function selectOption(el, choice) {
+            // Déselectionner les autres
+            document.querySelectorAll('.option-card').forEach(btn => btn.classList.remove('selected'));
+            // Sélectionner celui-là
+            el.classList.add('selected');
+            currentChoice = choice;
+            document.getElementById('answer-slot').innerText = el.innerText;
+            document.getElementById('check-btn').disabled = false;
+        }
+
+        function validate() {
+            if(currentChoice === 'dawa') {
+                alert("Bravo ! C'est la bonne réponse ! 🎉");
+                document.getElementById('prog').style.width = "100%";
+            } else {
+                alert("Dommage ! Réessaie encore. 💡");
+            }
+        }
+    </script>
+</body>
+</html>
